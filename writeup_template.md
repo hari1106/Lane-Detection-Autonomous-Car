@@ -27,18 +27,18 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 ### Results
 
 ### Input image
-![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/solid_yellow_left.png)
+![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/test_images/solid_yellow_left.png)
 ### Preprocessing
-![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/filters.PNG)
+![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/writeup_images/filters.png)
 
 ### Hough output
-![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/hough.png)
+![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/writeup_images/hough.png)
 
 ### Final Output
-![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/final.png)
+![alt text](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/writeup_images/final.png)
 
 ### Video
-[Video Link](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/solidWhiteRight.mp4)
+[Video Link](https://github.com/hari1106/CarND-LaneLines-P1/blob/master/test_videos_output/solidWhiteRight.mp4)
 
 ### 2. Identify potential shortcomings with your current pipeline
 
