@@ -8,49 +8,59 @@ Overview
 
 When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
 
-In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
-
-To complete the project, two files will be submitted: a file containing project code and a file containing a brief write up explaining your solution. We have included template files to be used both for the [code](https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb) and the [writeup](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).The code file is called P1.ipynb and the writeup template is writeup_template.md 
-
-To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
+In this project I will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
 
 
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
+**Finding Lane Lines on the Road**
 
-1. Describe the pipeline
-
-2. Identify any shortcomings
-
-3. Suggest possible improvements
-
-We encourage using images in your writeup to demonstrate how your pipeline works.  
-
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md). 
+The goals / steps of this project are the following:
+* Make a pipeline that finds lane lines on the road
 
 
-The Project
----
 
-## If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
+### Reflection
 
-**Step 1:** Set up the [CarND Term1 Starter Kit](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/83ec35ee-1e02-48a5-bdb7-d244bd47c2dc/lessons/8c82408b-a217-4d09-b81d-1bda4c6380ef/concepts/4f1870e0-3849-43e4-b670-12e6f2d4b7a7) if you haven't already.
+### 1. Describe the pipeline. As part of the description, explain how to modify the draw_lines() function.
 
-**Step 2:** Open the code in a Jupyter Notebook
+My pipeline consisted of 5 steps:
 
-You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
+-(i)First I converted image to grayscale.
 
-Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
+-(ii)Smoothening of image by Gaussian filters
 
-`> jupyter notebook`
+-(iii)Edges are detected using Canny filter
 
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
+-(iv)Now we have the image with edges detected all over the image but our focus is on the lane edges.So we will use polyfunction to specify our region of interest.
 
-**Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
+-(v)So we have features from the region of interset,now we have to detect lines within this region.For that we will be using Hough transform.
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+In order to draw a single line on the left and right lanes, I modified the draw_lines() function by calculating the slope of lines detected by Hough transform.Since our Y dimension is increasing downwards,Negative slope will be corresponding to left lane and positive slope will be for right lane.If the lines are vertical, then it is neglected say for eg zebra lines are not considered.By taking weighted average of the slopes and intercepts of left and right lanes,we have the right metric to extrapolate the line from fixed points in image by finding xcoordinates in base by slope equation.
 
+### Results
+
+### Input image
+![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/test_images/solidYellowLeft.jpg)
+### Preprocessing
+![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/writeup_images/filters.png)
+
+### Hough output
+![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/writeup_images/hough.png)
+
+### Final Output
+![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/writeup_images/final.png)
+
+### Video
+[Video Link](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/test_videos_output/solidWhiteRight.mp4)
+
+### 2. Identify potential shortcomings with the current pipeline
+
+>One potential shortcoming would be what would happen when there are curves or turnings where lines can intersect.
+
+>Another shortcoming could be the region of interest approach which depends on the position of camera and also in real life situation there will be multiple objects in the road which can block the lanes and also reflections may lead to false detection.
+
+
+### 3. Suggest possible improvements to the pipeline
+
+>A possible improvement would be to find best regions of interest and use HSV color transformation.
+
+>Another potential improvement could be to train a deep learning model with different scales and augmented images of lanes so that the model won't be dependent on the position of camera or region of interest specific.
