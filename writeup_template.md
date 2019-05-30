@@ -27,7 +27,7 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 ### Results
 
 ### Input image
-![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/test_images/solid_yellow_left.png)
+![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/test_images/solidYellowLeft.jpg)
 ### Preprocessing
 ![alt text](https://github.com/hari1106/Lane-Detection-Autonomous-Car/blob/master/writeup_images/filters.png)
 
